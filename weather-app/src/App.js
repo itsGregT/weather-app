@@ -1,18 +1,39 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Home from './components/Home';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+  const cityInput = "new";
+  const url = 'https://andruxnet-world-cities-v1.p.mashape.com/?query=' + cityInput + '&searchby=city';
+
+  try {
+    fetch(url, {
+      method: 'GET',
+      headers: {
+      'X-Mashape-Key': 'elJSzs80GjmshE9NIhftugGztMYXp1OqX9qjsnBm6qPbeA8ktQ',
+      'Accept': 'application/json'
+      }
+    }).then(function(response) {
+      try {
+        return response.json();
+      } catch(error) {
+        console.log("response error - ", error);
+      }
+     
+    })
+    .then(function(myJson) {
+      console.log(myJson);
+    });
+  } catch(error) {
+    console.log('Error ', error);
+  }
+}
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Home />
       </div>
     );
   }
